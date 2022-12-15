@@ -83,7 +83,8 @@ export default {
             if (!userId) return;
             axios.post("http://localhost:9998/realsocket/enterChat", {"roomNumber": room.roomNumber, "userId": userId}).then(({data}) => {
                 sessionStorage.setItem("roomNumber", room.roomNumber);
-                this.$store.state.stompClient.send("/socket/sendMessage/" + sessionStorage.getItem("roomNumber"), JSON.stringify(data), {})
+                //notification에서 room인스턴스 찾아서 room인스턴스의 users를 return하고 받는 쪽에서는 user를 업데이트
+                this.$store.state.stompClient.send("/socket/notification/" + sessionStorage.getItem("roomNumber"))
                 this.$router.push( {path: '/ChatView/' + data + "/" + userId} )
             })
         }

@@ -75,7 +75,9 @@ export default {
                 })
                 this.$store.state.subscribeList.push(messageSubscribeId);
                 // 두 번째 구독은 채팅방 입장 퇴장에 대한 구독이에요
-                const NoteSubscribeId = this.$store.state.stompClient.subscribe("/topic/notification/" + data.roomNumber)
+                const NoteSubscribeId = this.$store.state.stompClient.subscribe("/topic/notification/" + data.roomNumber, (e) => {
+                    console.log(JSON.parse(e.body));
+                })
                 this.$store.state.subscribeList.push(NoteSubscribeId);
             });
         },
